@@ -12,11 +12,19 @@ def get_csv():
 	return csv_list
 
 
-@app.route('/<row_id>')
+@app.route("/")
+def index():
+    template = 'index.html'
+    object_list = get_csv()
+    return render_template(template, object_list=object_list)
+
+@app.route("/<row_id>/")
 def detail(row_id):
-	template = 'detail.html'
+	template = "detail.html"
 	object_list = get_csv()
-	return render_template(template, object_list=object_list)
+	for obj in object_list:
+		if obj["id"] == row_id:
+			return render_template(template, object=obj)
 
 
 if __name__ == '__main__':
